@@ -1,33 +1,91 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "@unocss/reset/tailwind.css";
+@unocss all;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+:root, *{
+    box-sizing: border-box;
+    --enter-translate-x: 0;
+    --enter-translate-y: 0;
+    --enter-scale: 1;
+    --enter-rotate: 0;
+    scroll-behavior: smooth;
+
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.camera{
+    perspective: 2000px;
+    perspective-origin: 50% 50%;
+}
+
+
+.hoverItem:hover .changeItem{
+  filter: grayscale(0);
+  transform: scale(1.05);
+}
+
+[data-theme="dark"] {
+    --primary-square-color : rgba(0, 0, 0, 0.856);    
+    --secondary-square-color : rgb(83, 83, 83); 
+}
+
+[data-theme="light"] {
+    --primary-square-color : rgb(255, 255, 255);    
+    --secondary-square-color : rgb(190, 190, 190);    
+}
+
+@keyframes showBorder {
+    from {
+        border-color: black;
+    }
+    to {
+        border-color: #ffffff09;
+    }
+}
+
+@keyframes in {
+  0% {
+    transform: translate3d(
+        var(--enter-translate-x, 0),
+        var(--enter-translate-y, 0),
+        0
+      )
+      scale3d(
+        var(--enter-scale, 1),
+        var(--enter-scale, 1),
+        var(--enter-scale, 1)
+      )
+      rotate(var(--enter-rotate, 0));
+    opacity: 0;
+  }
+  100% {
+    transform: unset;
+    opacity: 1;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@keyframes out {
+  0% {
+    transform: unset;
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(
+        var(--enter-translate-x, 0),
+        var(--enter-translate-y, 0),
+        0
+      )
+      scale3d(
+        var(--enter-scale, 1),
+        var(--enter-scale, 1),
+        var(--enter-scale, 1)
+      )
+      rotate(var(--enter-rotate, 0));
+    opacity: 0;
+  }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.animate-in {
+  animation: in 0.5s cubic-bezier(0.23, 0.94, 0.28, 1.02) 1;
+}
+.animate-out {
+  animation: out 0.5s cubic-bezier(0.23, 0.94, 0.28, 1.02) 1;
 }

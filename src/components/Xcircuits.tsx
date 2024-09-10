@@ -1,4 +1,4 @@
-import { type LegacyRef, forwardRef } from 'react';
+import { type LegacyRef, forwardRef, memo } from 'react';
 
 const Xcircuits = forwardRef(
   (
@@ -120,4 +120,8 @@ const Xcircuits = forwardRef(
   },
 );
 
-export default Xcircuits;
+Xcircuits.displayName = 'Xcircuits';
+
+const XcircuitsMemo = memo(Xcircuits);
+
+export default XcircuitsMemo;

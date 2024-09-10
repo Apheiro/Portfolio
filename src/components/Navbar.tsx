@@ -117,7 +117,7 @@ function Navbar() {
         })}
       >
         <a
-          href='https://github.com/Apheiro'
+          href='https://github.com/Apheiro/Portfolio'
           target='_blank'
           rel='noreferrer'
           className='hover:scale-105 transition-transform duration-500 border-1px bg-white/05 h-30px flex items-center justify-center aspect-square border-white/10 rounded-md'

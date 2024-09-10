@@ -3,7 +3,7 @@ import Ycircuits from '@/components/Ycircuits';
 import useOpenBackground from '@/hooks/useOpenBackground';
 import { useDidUpdate, useElementSize } from '@mantine/hooks';
 import anime from 'animejs';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 function defineAnimations2() {
   const rotationAnimation = anime({
@@ -418,7 +418,6 @@ function SquareCore({ className }: { className?: string }) {
       <div
         ref={ref}
         className='w-[50%] h-[50%] flex justify-center items-center rounded-md relative border-[2px] border-[#6700a7]'
-        // onClick={squareCoreAnimation?.play}
       >
         <Ycircuits
           id='TopCore'
@@ -441,4 +440,6 @@ function SquareCore({ className }: { className?: string }) {
   );
 }
 
-export default SquareCore;
+const SquareCoreMemo = memo(SquareCore);
+
+export default SquareCoreMemo;

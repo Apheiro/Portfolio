@@ -1,4 +1,4 @@
-import { type LegacyRef, forwardRef } from 'react';
+import { type LegacyRef, forwardRef, memo } from 'react';
 
 const Ycircuits = forwardRef(
   (
@@ -122,4 +122,8 @@ const Ycircuits = forwardRef(
   },
 );
 
-export default Ycircuits;
+Ycircuits.displayName = 'Ycircuits';
+
+const YcircuitsMemo = memo(Ycircuits);
+
+export default YcircuitsMemo;

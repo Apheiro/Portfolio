@@ -14,25 +14,6 @@ type UseMosaicReturn<RefElement> = {
   isVisible: boolean;
 };
 
-function isInViewport({
-  x,
-  y,
-  width,
-  height,
-}: { x: number; y: number; width: number; height: number }) {
-  if (!window) return false;
-  return (
-    (y <= window.innerHeight &&
-      x <= window.innerWidth &&
-      y > 0 &&
-      x > 0) ||
-    (y + height <= window.innerHeight &&
-      x + width <= window.innerWidth &&
-      y + height > 0 &&
-      x + width > 0)
-  );
-}
-
 function calculateDistanceFromElement({
   eCoords,
   point,
@@ -123,10 +104,7 @@ function openMosaic<RefElement extends HTMLElement>({
       eCoords,
       point: { x: mxC, y: myC },
     });
-    if (
-      distanceToElement > (options?.range ?? 100) &&
-      !isInViewport(mCoords)
-    ) {
+    if (distanceToElement > (options?.range ?? 100)) {
       indexLoop++;
       continue;
     }
@@ -174,7 +152,6 @@ function openMosaic<RefElement extends HTMLElement>({
     }
     indexLoop++;
   }
-  console.log('ends ?');
   return { openAnimation, glowAnimation, refillBorderColor };
 }
 

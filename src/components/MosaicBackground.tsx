@@ -15,6 +15,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
@@ -29,25 +30,6 @@ function squaresCalculator(
   setQuantity(Math.floor(quantity));
 }
 
-function Square({
-  idNumber,
-  sizeOfMesh,
-  stopLoading,
-  ...props
-}: HTMLAttributes<HTMLDivElement> & {
-  idNumber: number;
-  sizeOfMesh: number;
-  stopLoading: () => void;
-}) {
-  useEffect(() => {
-    if (sizeOfMesh === idNumber + 1) {
-      stopLoading();
-    }
-  }, []);
-
-  return <div {...props} />;
-}
-
 function MosaicBackground({
   sizeOfSquares = 50,
 }: { sizeOfSquares?: number }) {
@@ -58,7 +40,6 @@ function MosaicBackground({
     isResizing,
     resizing,
     stopResizing,
-    // isLoading,
     loading,
     stopLoading,
   } = useContext(MosaicBackgroundContextRef);
@@ -72,6 +53,7 @@ function MosaicBackground({
     squaresCalculator,
     500,
   );
+  const squaresAreRendered = useRef(false);
   const mosaicElements = useMemo(
     () => Array.from({ length: quantity }, (_, idx) => idx),
     [quantity],
@@ -96,9 +78,7 @@ function MosaicBackground({
             from: 'center',
           }),
         }).finished.then(() => {
-          setTimeout(() => {
-            stopLoading();
-          }, 1000);
+          stopLoading();
         });
       }
     } else {
@@ -112,7 +92,10 @@ function MosaicBackground({
   }, []);
 
   useDidUpdate(() => {
-    if (quantity === 0) squareLoading();
+    if (quantity === 0) {
+      squareLoading();
+      squaresAreRendered.current = false;
+    }
   }, [quantity]);
 
   useDidUpdate(() => {
@@ -125,6 +108,12 @@ function MosaicBackground({
     calculateSquares(setQuantity, parentRef.current, sizeOfSquares);
   }, [width, height]);
 
+  useDidUpdate(() => {
+    if (squaresAreRendered.current) {
+      stopSquareLoading();
+    }
+  }, [squaresAreRendered.current]);
+
   return (
     <div
       ref={parentRef}
@@ -136,16 +125,18 @@ function MosaicBackground({
       {quantity === 0 ? (
         <div className='absolute right-0 top-0 left-0 bottom-0 bg-black z-[1]' />
       ) : (
-        mosaicElements.map((elementNumber) => (
-          <Square
-            key={elementNumber}
-            idNumber={elementNumber}
-            sizeOfMesh={mosaicElements.length}
-            stopLoading={stopSquareLoading}
-            className='square w-full h-full bg-black border-[1px] '
-            style={{ transform: 'scale(1)', borderColor: 'black' }}
-          />
-        ))
+        mosaicElements.map((elementNumber) => {
+          if (elementNumber === mosaicElements.length - 1) {
+            squaresAreRendered.current = true;
+          }
+          return (
+            <div
+              key={elementNumber}
+              className='square w-full h-full bg-black border-[1px] '
+              style={{ transform: 'scale(1)', borderColor: 'black' }}
+            />
+          );
+        })
       )}
     </div>
   );

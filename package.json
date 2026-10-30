@@ -3,20 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "pnpm build:mosaic && next dev",
+    "build": "pnpm build:mosaic && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build:mosaic": "pnpm --filter @apheiro/mosaic build",
+    "test:mosaic": "pnpm --filter @apheiro/mosaic test",
+    "typecheck": "pnpm build:mosaic && tsc --noEmit",
+    "test:browser": "pnpm build:mosaic && playwright test",
+    "test:package": "node scripts/verify-mosaic-package.mjs"
   },
   "dependencies": {
+    "@apheiro/mosaic": "workspace:*",
     "@mantine/hooks": "^7.12.1",
     "@preact/signals-react": "^2.2.0",
     "@radix-ui/react-scroll-area": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@tabler/icons-react": "^3.14.0",
-    "@types/animejs": "^3.1.12",
-    "animejs": "^4.0.2",
-    "colord": "^2.9.3",
     "cva": "1.0.0-beta.1",
     "next": "14.2.6",
     "react": "^18",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
+    "@playwright/test": "^1.64.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

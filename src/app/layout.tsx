@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { MosaicBackgroundProvider } from '@/MosaicBackground/providers/MosaicBackgroundProvider';
+import { MosaicProvider } from '@apheiro/mosaic/react';
 import { GlobalScroll } from '@/Providers/GlobalScrollProvider';
 import Navbar from '@/components/Navbar';
 import { TooltipProvider } from '@/core/Tooltip';
@@ -30,10 +30,10 @@ export default function RootLayout({
       <body className='overflow-x-hidden '>
         <GlobalScroll>
           <TooltipProvider delayDuration={100}>
-            <MosaicBackgroundProvider>
+            <MosaicProvider>
               <Navbar />
               {children}
-            </MosaicBackgroundProvider>
+            </MosaicProvider>
           </TooltipProvider>
         </GlobalScroll>
       </body>

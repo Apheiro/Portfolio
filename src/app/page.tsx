@@ -4,6 +4,7 @@ import {
   useMosaicElement,
 } from '@apheiro/mosaic/react';
 import Project from '@/components/Project';
+import SquareCore from '@/components/SquareCore';
 import Tecnologies from '@/components/Tecnologies';
 import Ycircuits from '@/components/Ycircuits';
 import { ScrollArea } from '@/core/ScrollArea';
@@ -12,7 +13,9 @@ import {
   IconBrandLinkedin,
   IconMail,
 } from '@tabler/icons-react';
+import anime from 'animejs';
 import NextImage from 'next/image';
+import { useEffect, useMemo } from 'react';
 
 const projects = [
   {
@@ -168,28 +171,44 @@ const projects = [
 ];
 
 export default function Home() {
-  const [refNavbar, { toggle }] = useMosaicElement<HTMLDivElement>({
-    show: {
-      initialState: true,
-      range: 70,
-      minSize: 5,
-    },
-    glow: {
-      color: 'rgb(0, 255, 21)',
-      range: 150,
-      duration: 1000,
-      loopDelay: 0,
-      delay: 150,
-    },
+  const [ref] = useMosaicElement<HTMLDivElement>({
+    show: { initialState: true, range: 150, minSize: 0 },
   });
-  const [refBottom] = useMosaicElement<HTMLDivElement>({
-    show: {
-      initialState: true,
-      delay: 200000,
-      range: 80,
-      minSize: 5,
-    },
+  const [navbarBgRef] = useMosaicElement<HTMLDivElement>({
+    show: { initialState: true, range: 100, minSize: 5 },
   });
+  const projectsElements = useMemo(
+    () =>
+      projects.map(({ projectName, ...props }) => (
+        <Project key={projectName} {...props} />
+      )),
+    [],
+  );
+
+  useEffect(() => {
+    const circuits = anime({
+      targets: [
+        '#yBottomBar1',
+        '#yBottomBar2',
+        '#yBottomBar3',
+        '#yBottomBar4',
+        '#yBottomBar5',
+        '#yBottomBar6',
+        '#yBottomBar7',
+        '#yBottomBar8',
+        '#yBottomBar9',
+      ],
+      y2: ['-30%', '100%'],
+      y1: ['0%', '130%'],
+      loop: true,
+      easing: 'linear',
+      duration: 2000,
+      delay: (_, i) => i * 500,
+    });
+    return () => {
+      circuits.pause();
+    };
+  }, []);
 
   return (
     <main className='min-h-dvh max-w-dvw relative  bg-black overflow-x-hidden'>
@@ -201,13 +220,16 @@ export default function Home() {
         className='min-h-[calc(100dvh+160px)] flex justify-center items-inherit md:items-center relative p-5 md:p-10'
         id='home'
       >
-        <MosaicBackground size={20} style={{ zIndex: 2 }} />
-
+        <MosaicBackground
+          size={25}
+          borderColor='#111111'
+          style={{ zIndex: 2 }}
+        />
         <div
-          ref={refNavbar}
+          ref={navbarBgRef}
           className='top-1 z-[1] absolute left-[50%] translate-x-[-50%] justify-center items-center flex w-full max-w-[510px] h-full max-h-[55px] '
         >
-          <div className='w-full h-full rounded-md border-[1px] border-[#6700a7] relative z-[1]' />
+          <div className='w-full h-full rounded-md border-[1px] border-[#6700a7] relative z-[1] ' />
           <div
             style={{
               background: 'radial-gradient(#27004b,black)',
@@ -219,12 +241,10 @@ export default function Home() {
             className='rotate-180 max-w-[100px] absolute top-[100%]'
           />
         </div>
-
         <div className='flex flex-col md:grid md:grid-cols-[repeat(auto-fill,minmax(340px,1fr))] w-full max-w-1000px py-30 md:pt-0 md:pb-20 gap-5 h-fit'>
           <div className='flex flex-col w-fit h-fit bg-black text-white gap-2 p-10px rounded-lg border-[#111111] border-[2px] z-[2] place-self-center md:justify-self-start'>
             <div className='aspect-square w-full max-w-[300px] rounded-md z-[3] backdrop-blur-[1px] bg-white/5 border-[1px] border-white/10 p-2 '>
               <NextImage
-                onClick={() => toggle()}
                 alt='profile picture'
                 src='/profile-picture.jpg'
                 className='object-cover w-full rounded-md h-full'
@@ -234,12 +254,13 @@ export default function Home() {
               />
             </div>
             <div>
-              <h1 className='text-3xl font-bold cursor-pointer'>
+              <h1 className='text-3xl font-bold'>
                 Eyen Fernando Tuyon
               </h1>
               <p>Front-end developer</p>
             </div>
           </div>
+          <SquareCore className='place-self-center relative aspect-square flex justify-center items-center w-full min-w-[150px] max-w-[300px] ' />
           <div className='bg-black md:col-span-2  border-[#111111] border-[2px] rounded-lg p-[10px] z-[2] text-white place-self-center '>
             Self-taught front-end developer with a strong focus on
             continuous learning and skill development. I actively
@@ -252,7 +273,7 @@ export default function Home() {
           </div>
         </div>
         <div
-          ref={refBottom}
+          ref={ref}
           className='w-full h-[25px] absolute bottom-0'
         />
       </section>
@@ -264,9 +285,7 @@ export default function Home() {
           <Tecnologies />
           <ScrollArea classNameViewport='h-full max-h-650px w-full'>
             <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4'>
-              {projects.map(({ projectName, ...props }) => (
-                <Project key={projectName} {...props} />
-              ))}
+              {projectsElements}
             </div>
           </ScrollArea>
         </div>

@@ -197,14 +197,33 @@ test('portfolio consumes the local package and renders its canvas', async ({
   const before = await canvas.evaluate((node: HTMLCanvasElement) =>
     node.toDataURL(),
   );
-  await page.locator('#home').getByAltText('profile picture').click();
+  await page.getByRole('button', { name: 'Abrir núcleo' }).click();
+  await expect(
+    page.getByRole('button', { name: 'Cerrar núcleo' }),
+  ).toHaveAttribute('aria-pressed', 'true');
   await expect
     .poll(() =>
       canvas.evaluate((node: HTMLCanvasElement) => node.toDataURL()),
     )
     .not.toBe(before);
+  await page
+    .getByRole('button', { name: 'Cerrar núcleo' })
+    .press('Enter');
+  await expect(
+    page.getByRole('button', { name: 'Abrir núcleo' }),
+  ).toHaveAttribute('aria-pressed', 'false');
   await page.screenshot({
     path: `artifacts/portfolio-${testInfo.project.name}.png`,
   });
+  const viewport = page
+    .locator('[data-radix-scroll-area-viewport]')
+    .first();
+  const navbar = page
+    .locator('section')
+    .filter({ has: page.locator('a[href="#contact"]') });
+  await viewport.evaluate((element) => {
+    element.scrollTop = 400;
+  });
+  await expect(navbar).toHaveCSS('z-index', '5');
   expect(errors).toEqual([]);
 });

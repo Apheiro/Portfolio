@@ -5,7 +5,7 @@ export default defineConfig({
   timeout: 30_000,
   use: {
     // biome-ignore lint/style/useNamingConvention: Playwright's public configuration key.
-    baseURL: 'http://127.0.0.1:3100',
+    baseURL: 'http://127.0.0.1:3200',
     launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
       ? {
           executablePath:
@@ -24,8 +24,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm exec next dev -p 3100',
-    url: 'http://127.0.0.1:3100/mosaic-demo',
+    command: 'pnpm exec next dev -p 3200',
+    url: 'http://127.0.0.1:3200/mosaic-demo',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

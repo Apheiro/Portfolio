@@ -26,6 +26,9 @@ importers:
       '@tabler/icons-react':
         specifier: ^3.14.0
         version: 3.31.0(react@18.3.1)
+      animejs:
+        specifier: ^3.2.2
+        version: 3.2.2
       cva:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1(typescript@5.8.3)
@@ -45,6 +48,9 @@ importers:
       '@playwright/test':
         specifier: ^1.64.1
         version: 1.64.1
+      '@types/animejs':
+        specifier: ^3.1.12
+        version: 3.1.13
       '@types/node':
         specifier: ^20
         version: 20.17.30
@@ -1089,6 +1095,9 @@ packages:
   '@tabler/icons@3.31.0':
     resolution: {integrity: sha512-dblAdeKY3+GA1U+Q9eziZ0ooVlZMHsE8dqP0RkwvRtEsAULoKOYaCUOcJ4oW1DjWegdxk++UAt2SlQVnmeHv+g==}
 
+  '@types/animejs@3.1.13':
+    resolution: {integrity: sha512-yWg9l1z7CAv/TKpty4/vupEh24jDGUZXv4r26StRkpUPQm04ztJaftgpto8vwdFs8SiTq6XfaPKCSI+wjzNMvQ==}
+
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
 
@@ -1193,6 +1202,9 @@ packages:
     resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  animejs@3.2.2:
+    resolution: {integrity: sha512-Ao95qWLpDPXXM+WrmwcKbl6uNlC5tjnowlaRYtuVDHHoygjtIPfDUoK9NthrlZsQSKjZXlmji2TrBUAVbiH0LQ==}
 
   animejs@4.0.2:
     resolution: {integrity: sha512-f0L/kSya2RF23iMSF/VO01pMmLwlAFoiQeNAvBXhEyLzIPd2/QTBRatwGUqkVCC6seaAJYzAkGir55N4SL+h3A==}
@@ -2582,6 +2594,8 @@ snapshots:
 
   '@tabler/icons@3.31.0': {}
 
+  '@types/animejs@3.1.13': {}
+
   '@types/estree@1.0.7': {}
 
   '@types/estree@1.0.8': {}
@@ -2748,6 +2762,8 @@ snapshots:
       - supports-color
 
   acorn@8.14.1: {}
+
+  animejs@3.2.2: {}
 
   animejs@4.0.2: {}
 

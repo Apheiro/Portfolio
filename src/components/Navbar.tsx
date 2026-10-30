@@ -1,13 +1,16 @@
 'use client';
+import useSignalGlobalScroll from '@/hooks/useSignalGlobalScroll';
+import { useDisclosure } from '@mantine/hooks';
+import { useSignalEffect } from '@preact/signals-react';
 import {
   IconBrandGithub,
   IconCategory2,
   IconHome,
   IconMail,
 } from '@tabler/icons-react';
-// import anime from 'animejs';
+import anime from 'animejs';
 import { cva } from 'cva';
-import { useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 const navbarStyle = cva({
   base: [
@@ -50,57 +53,57 @@ const navbarContainerStyle = cva({
 });
 
 function Navbar() {
-  // const { y: scrollY } = useSignalGlobalScroll();
-  // const [isMounted, setIsMounted] = useDisclosure(false);
-  // const [isVisible, setIsVisible] = useDisclosure(false);
+  const { y: scrollY } = useSignalGlobalScroll();
+  const [isMounted, setIsMounted] = useDisclosure(false);
+  const [isVisible, setIsVisible] = useDisclosure(false);
   const navbarRef = useRef<HTMLDivElement>(null);
-  // const animation = useMemo(() => {
-  //   if (typeof window !== 'undefined') {
-  //     return anime({
-  //       targets: navbarRef.current,
-  //       zIndex: {
-  //         value: 5,
-  //         delay: 1000,
-  //         round: true,
-  //       },
-  //       scale: [
-  //         { value: 1, duration: 1000 },
-  //         { value: 0.8, duration: 0 },
-  //         { value: 1, duration: 1000 },
-  //       ],
-  //       opacity: [
-  //         { value: 1, duration: 1000 },
-  //         { value: 0, duration: 0 },
-  //         { value: 1, duration: 1000 },
-  //       ],
-  //       backdropFilter: [
-  //         { value: 'blur(0px)', duration: 0 },
-  //         { value: 'blur(10px)', duration: 2000 },
-  //       ],
-  //       translateX: '-50%',
-  //       easing: 'cubicBezier(0.25, 0.62, 0.17, 1)',
-  //       autoplay: false,
-  //     });
-  //   }
-  //   return null;
-  // }, [isMounted]);
+  const animation = useMemo(() => {
+    if (typeof window !== 'undefined') {
+      return anime({
+        targets: navbarRef.current,
+        zIndex: {
+          value: 5,
+          delay: 1000,
+          round: true,
+        },
+        scale: [
+          { value: 1, duration: 1000 },
+          { value: 0.8, duration: 0 },
+          { value: 1, duration: 1000 },
+        ],
+        opacity: [
+          { value: 1, duration: 1000 },
+          { value: 0, duration: 0 },
+          { value: 1, duration: 1000 },
+        ],
+        backdropFilter: [
+          { value: 'blur(0px)', duration: 0 },
+          { value: 'blur(10px)', duration: 2000 },
+        ],
+        translateX: '-50%',
+        easing: 'cubicBezier(0.25, 0.62, 0.17, 1)',
+        autoplay: false,
+      });
+    }
+    return null;
+  }, [isMounted]);
 
-  // useEffect(() => {
-  //   setIsMounted.open();
-  // }, []);
+  useEffect(() => {
+    setIsMounted.open();
+  }, []);
 
-  // useSignalEffect(() => {
-  //   if (scrollY.value < 300) {
-  //     animation?.seek((scrollY.value / 300) * animation?.duration);
-  //   } else if (scrollY.value > 300) {
-  //     animation?.seek(animation?.duration);
-  //   }
-  //   if (scrollY.value > 250) {
-  //     setIsVisible.open();
-  //   } else {
-  //     setIsVisible.close();
-  //   }
-  // });
+  useSignalEffect(() => {
+    if (scrollY.value < 300) {
+      animation?.seek((scrollY.value / 300) * animation?.duration);
+    } else if (scrollY.value > 300) {
+      animation?.seek(animation?.duration);
+    }
+    if (scrollY.value > 250) {
+      setIsVisible.open();
+    } else {
+      setIsVisible.close();
+    }
+  });
 
   return (
     <section
@@ -110,7 +113,7 @@ function Navbar() {
     >
       <div
         className={navbarStyle({
-          // isVisible,
+          isVisible,
         })}
       >
         <a

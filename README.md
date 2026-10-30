@@ -16,6 +16,6 @@ pnpm test:browser      # desktop/mobile interactions and StrictMode cleanup
 pnpm test:package      # installs a tarball in a temporary external consumer
 ```
 
-Open `/` for the portfolio or `/mosaic-demo` for the library example. When editing library source, run `pnpm build:mosaic` again (or `pnpm --filter @apheiro/mosaic exec tsc -p tsconfig.json --watch` in another terminal).
+Open `/` for the portfolio or `/mosaic-demo` for the library example. The portfolio retains its interactive cube, SVG circuits and scroll-responsive navigation; their existing Anime.js 3 animations are independent of the mosaic package’s Anime.js 4 dependency. The cube controls a canvas opening and purple pulse through `useMosaicElement`. When editing library source, run `pnpm build:mosaic` again (or `pnpm --filter @apheiro/mosaic exec tsc -p tsconfig.json --watch` in another terminal).
 
 No npm publication is performed by these commands. See the package README to create a tarball and consume it from another project.

@@ -1,5 +1,6 @@
 import { animate, type JSAnimation } from 'animejs';
 import { createTiles, relativeRect } from './geometry.js';
+import { glowCycleDuration } from './glow.js';
 import { resolveElementOptions, resolveOptions } from './options.js';
 import {
   drawGrid,
@@ -127,7 +128,7 @@ export function createMosaic(
     const glow = entry.options.glow;
     entry.glow = animate(entry.state, {
       pulse: [0, 1],
-      duration: glow.duration,
+      duration: glowCycleDuration(glow),
       loopDelay: glow.loopDelay,
       loop: true,
       ease: 'linear',

@@ -83,9 +83,11 @@ Distances use CSS pixels and timings use milliseconds. Colors accept hex, RGB an
 | `glow` | absent | Enable a repeating glow when the opening completes. |
 | `glow.color` | `#a948ff` | Glow color. |
 | `glow.range` | `150` | Distance outside the element affected by the glow. |
-| `glow.duration` | `1500` | One complete pulse; must be positive. |
+| `glow.duration` | `1500` | One tile's rise and fade; must be positive. |
 | `glow.loopDelay` | `0` | Gap between pulses. |
-| `glow.delay` | `150` | Spatial delay across the glow. |
+| `glow.delay` | `150` | Base spatial delay, increasing up to 10× at the outer edge. |
+
+Each glow cycle includes the full per-tile duration plus the outermost spatial delay, followed by `loopDelay`. The wave returns completely to the resting border color before repeating.
 
 Options are validated. Engine updates merge canvas options; element updates replace element options, restoring unspecified defaults. Destroy methods are idempotent. Destroying an instance cancels its animations and pending draw, disconnects its ResizeObserver, and removes its listeners. No permanent render loop runs when idle.
 

@@ -2,6 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createMosaic } from '../dist/core/index.js';
 import {
+  glowCycleDuration,
+  glowIntensity,
+} from '../dist/core/glow.js';
+import {
   createTiles,
   distanceToRect,
   relativeRect,
@@ -270,4 +274,34 @@ test('SSR imports are safe and destroyed instances reject new registrations', ()
   engine.refresh();
   engine.update({ size: 40 });
   assert.equal(env.frames.size, 0);
+});
+
+test('glow propagates outwards and preserves the complete fading tail before repeating', () => {
+  const glow = { range: 150, duration: 1000, delay: 150 };
+  const cycle = glowCycleDuration(glow);
+  const sample = (distance, elapsed) =>
+    glowIntensity(distance, elapsed / cycle, glow);
+  assert.equal(cycle, 2500);
+  assert.equal(sample(15, 0), 0);
+  assert.equal(sample(120, 500), 0);
+  assert.ok(sample(15, 500) > 0);
+  assert.equal(sample(15, 1500), 0);
+  assert.ok(sample(120, 1800) > 0);
+  assert.ok(sample(135, 2200) > 0);
+  assert.ok(sample(135, 2350) < sample(135, 2200));
+  for (const distance of [0, 1, 15, 75, 120, 135, 149, 150, 151]) {
+    assert.equal(sample(distance, cycle), 0);
+    assert.equal(sample(distance, 0), 0);
+  }
+});
+
+test('a pulse with no spatial delay still rises and fades to its resting color', () => {
+  const glow = { range: 100, duration: 800, delay: 0 };
+  assert.equal(glowCycleDuration(glow), 800);
+  assert.equal(glowIntensity(25, 0, glow), 0);
+  assert.equal(glowIntensity(25, 0.5, glow), 0.75);
+  assert.ok(
+    glowIntensity(25, 0.75, glow) < glowIntensity(25, 0.5, glow),
+  );
+  assert.equal(glowIntensity(25, 1, glow), 0);
 });

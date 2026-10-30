@@ -5,6 +5,7 @@ import type {
   resolveOptions,
 } from './options.js';
 import { clamp, distanceToRect, sizeAtDistance } from './geometry.js';
+import { glowIntensity } from './glow.js';
 
 type Color = ReturnType<ReturnType<typeof colord>['toRgb']>;
 
@@ -62,15 +63,8 @@ function applyTarget(
   );
   const size = tile.size + (endSize - tile.size) * progress;
   if (glow && target.progress > 0 && distance <= glow.range) {
-    const falloff = glow.range
-      ? 1 - clamp(distance / glow.range)
-      : Number(distance === 0);
-    const phase = clamp(
-      target.pulse * (1 + glow.delay / glow.duration) -
-        ((1 - falloff) * glow.delay) / glow.duration,
-    );
-    const pulse = 1 - Math.abs(phase * 2 - 1);
-    color = mix(color, glowColor, falloff * pulse * progress);
+    const pulse = glowIntensity(distance, target.pulse, glow);
+    color = mix(color, glowColor, pulse * progress);
   }
   return { size, color };
 }

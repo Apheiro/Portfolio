@@ -17,7 +17,7 @@ export interface MosaicGlowOptions {
   range?: number;
   duration?: number;
   loopDelay?: number;
-  /** Delay between the inner and outer edge of the glow wave. */
+  /** Base tile delay; grows up to ten times this value at the outer edge. */
   delay?: number;
 }
 

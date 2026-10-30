@@ -11,7 +11,11 @@ function GlobalScroll({ children }: { children: React.ReactNode }) {
 
   return (
     <GlobalScrollContext.Provider value={scrollRef}>
-      <ScrollArea ref={scrollRef} className='h-dvh'>
+      <ScrollArea
+        ref={scrollRef}
+        id='global-scroll'
+        className='h-dvh'
+      >
         {children}
       </ScrollArea>
     </GlobalScrollContext.Provider>

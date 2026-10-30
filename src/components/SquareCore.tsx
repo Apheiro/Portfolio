@@ -1,254 +1,252 @@
 import Xcircuits from '@/components/Xcircuits';
 import Ycircuits from '@/components/Ycircuits';
-import useOpenBackground from '@/hooks/useOpenBackground';
+// import useOpenBackground from '@/hooks/useOpenBackground';
 import { useDidUpdate, useElementSize } from '@mantine/hooks';
-import anime from 'animejs';
+import { animate } from 'animejs';
 import { memo, useEffect, useState } from 'react';
 
-function defineAnimations2() {
-  const rotationAnimation = anime({
-    targets: ['#squareSmallCore'],
-    loop: true,
-    autoplay: false,
-    rotateX: [
-      { value: 160, duration: 0 },
-      { value: 520, duration: 3000 },
-    ],
-    rotateY: [
-      { value: 45, duration: 0 },
-      { value: 765, duration: 3000 },
-    ],
-    rotateZ: [
-      { value: 0, duration: 0 },
-      { value: 360, duration: 3000 },
-    ],
-    easing: 'linear',
-  });
-  const glowAnimaiton = anime({
-    targets: ['#squareSmallCoreContainer'],
-    loop: true,
-    autoplay: false,
-    direction: 'alternate',
-    filter: [
-      {
-        value: 'drop-shadow(0px 0px 5px #a948ff) brightness(1) ',
-        duration: 0,
-      },
-      {
-        value: 'drop-shadow(0px 0px 25px #a948ff) brightness(2) ',
-        duration: 3000,
-      },
-      {
-        value: 'drop-shadow(0px 0px 5px #a948ff) brightness(1) ',
-        duration: 3000,
-      },
-    ],
-    easing: 'linear',
-  });
-  const timeline4 = anime.timeline({
-    autoplay: false,
-    loop: true,
-  });
-  timeline4.add(
-    {
-      targets: [
-        '#yTopCore1',
-        '#yTopCore2',
-        '#yTopCore3',
-        '#yTopCore4',
-        '#yTopCore5',
-        '#yTopCore6',
-        '#yTopCore7',
-        '#yTopCore8',
-        '#yTopCore9',
-      ],
-      y2: ['-30%', '100%'],
-      y1: ['0%', '130%'],
-      easing: 'linear',
-      duration: 2000,
-      delay: (_, i) => i * 500,
-    },
-    0,
-  );
-  timeline4.add(
-    {
-      targets: [
-        '#yBottomCore1',
-        '#yBottomCore2',
-        '#yBottomCore3',
-        '#yBottomCore4',
-        '#yBottomCore5',
-        '#yBottomCore6',
-        '#yBottomCore7',
-        '#yBottomCore8',
-        '#yBottomCore9',
-      ],
-      y2: ['-30%', '100%'],
-      y1: ['0%', '130%'],
-      easing: 'linear',
-      duration: 1500,
-      delay: (_, i) => i * 1000,
-    },
-    0,
-  );
-  timeline4.add(
-    {
-      targets: [
-        '#xRightCore1',
-        '#xRightCore2',
-        '#xRightCore3',
-        '#xRightCore4',
-        '#xRightCore5',
-        '#xRightCore6',
-        '#xRightCore7',
-        '#xRightCore8',
-        '#xRightCore9',
-      ],
-      x2: ['-30%', '100%'],
-      x1: ['0%', '130%'],
-      loop: true,
-      easing: 'linear',
-      duration: 2000,
-      delay: (_, i) => i * 500,
-    },
-    0,
-  );
-  timeline4.add(
-    {
-      targets: [
-        '#xLeftCore1',
-        '#xLeftCore2',
-        '#xLeftCore3',
-        '#xLeftCore4',
-        '#xLeftCore5',
-        '#xLeftCore6',
-        '#xLeftCore7',
-        '#xLeftCore8',
-        '#xLeftCore9',
-      ],
-      x2: ['-30%', '100%'],
-      x1: ['0%', '130%'],
-      loop: true,
-      easing: 'linear',
-      duration: 1500,
-      delay: (_, i) => i * 1000,
-    },
-    0,
-  );
-  return { rotationAnimation, glowAnimaiton, timeline4 };
-}
+// function defineAnimations2() {
+//   const rotationAnimation = animate(['#squareSmallCore'],{
+//     loop: true,
+//     autoplay: false,
+//     rotateX: [
+//       { value: 160, duration: 0 },
+//       { value: 520, duration: 3000 },
+//     ],
+//     rotateY: [
+//       { value: 45, duration: 0 },
+//       { value: 765, duration: 3000 },
+//     ],
+//     rotateZ: [
+//       { value: 0, duration: 0 },
+//       { value: 360, duration: 3000 },
+//     ],
+//     easing: 'linear',
+//   });
+//   const glowAnimaiton = animate(['#squareSmallCoreContainer'],{
+//     loop: true,
+//     autoplay: false,
+//     direction: 'alternate',
+//     filter: [
+//       {
+//         value: 'drop-shadow(0px 0px 5px #a948ff) brightness(1) ',
+//         duration: 0,
+//       },
+//       {
+//         value: 'drop-shadow(0px 0px 25px #a948ff) brightness(2) ',
+//         duration: 3000,
+//       },
+//       {
+//         value: 'drop-shadow(0px 0px 5px #a948ff) brightness(1) ',
+//         duration: 3000,
+//       },
+//     ],
+//     easing: 'linear',
+//   });
+//   const timeline4 = animate.timeline({
+//     autoplay: false,
+//     loop: true,
+//   });
+//   timeline4.add(
+//     {
+//       targets: [
+//         '#yTopCore1',
+//         '#yTopCore2',
+//         '#yTopCore3',
+//         '#yTopCore4',
+//         '#yTopCore5',
+//         '#yTopCore6',
+//         '#yTopCore7',
+//         '#yTopCore8',
+//         '#yTopCore9',
+//       ],
+//       y2: ['-30%', '100%'],
+//       y1: ['0%', '130%'],
+//       easing: 'linear',
+//       duration: 2000,
+//       delay: (_, i) => i * 500,
+//     },
+//     0,
+//   );
+//   timeline4.add(
+//     {
+//       targets: [
+//         '#yBottomCore1',
+//         '#yBottomCore2',
+//         '#yBottomCore3',
+//         '#yBottomCore4',
+//         '#yBottomCore5',
+//         '#yBottomCore6',
+//         '#yBottomCore7',
+//         '#yBottomCore8',
+//         '#yBottomCore9',
+//       ],
+//       y2: ['-30%', '100%'],
+//       y1: ['0%', '130%'],
+//       easing: 'linear',
+//       duration: 1500,
+//       delay: (_, i) => i * 1000,
+//     },
+//     0,
+//   );
+//   timeline4.add(
+//     {
+//       targets: [
+//         '#xRightCore1',
+//         '#xRightCore2',
+//         '#xRightCore3',
+//         '#xRightCore4',
+//         '#xRightCore5',
+//         '#xRightCore6',
+//         '#xRightCore7',
+//         '#xRightCore8',
+//         '#xRightCore9',
+//       ],
+//       x2: ['-30%', '100%'],
+//       x1: ['0%', '130%'],
+//       loop: true,
+//       easing: 'linear',
+//       duration: 2000,
+//       delay: (_, i) => i * 500,
+//     },
+//     0,
+//   );
+//   timeline4.add(
+//     {
+//       targets: [
+//         '#xLeftCore1',
+//         '#xLeftCore2',
+//         '#xLeftCore3',
+//         '#xLeftCore4',
+//         '#xLeftCore5',
+//         '#xLeftCore6',
+//         '#xLeftCore7',
+//         '#xLeftCore8',
+//         '#xLeftCore9',
+//       ],
+//       x2: ['-30%', '100%'],
+//       x1: ['0%', '130%'],
+//       loop: true,
+//       easing: 'linear',
+//       duration: 1500,
+//       delay: (_, i) => i * 1000,
+//     },
+//     0,
+//   );
+//   return { rotationAnimation, glowAnimaiton, timeline4 };
+// }
 
-function defineAnimations1({ cubeWidth }: { cubeWidth: number }) {
-  const timeline1 = anime.timeline({
-    autoplay: false,
-  });
-  timeline1.add(
-    {
-      targets: ['#boxLeft'],
-      translateX: [{ value: '-=10', duration: 2000 }],
-      rotateY: [{ value: 90, duration: 0 }],
-    },
-    0,
-  );
-  timeline1.add(
-    {
-      targets: ['#boxFront'],
-      translateZ: [
-        {
-          value: cubeWidth * 0.5 + cubeWidth * 0.1,
-          duration: 2000,
-        },
-      ],
-    },
-    0,
-  );
-  timeline1.add(
-    {
-      targets: ['#boxTop'],
-      translateY: [{ value: '-=10', duration: 2000 }],
-      rotateX: [{ value: 90, duration: 0 }],
-    },
-    0,
-  );
-  timeline1.add(
-    {
-      targets: ['#boxTop', '#boxFront', '#boxLeft'],
-      boxShadow: [
-        { value: '0px 0px 0px 0px #a948ffb3', duration: 0 },
-        { value: '0px 0px 60px -10px #a948ffb3', duration: 3000 },
-      ],
-    },
-    0,
-  );
+// function defineAnimations1({ cubeWidth }: { cubeWidth: number }) {
+//   const timeline1 = anime.timeline({
+//     autoplay: false,
+//   });
+//   timeline1.add(
+//     {
+//       targets: ['#boxLeft'],
+//       translateX: [{ value: '-=10', duration: 2000 }],
+//       rotateY: [{ value: 90, duration: 0 }],
+//     },
+//     0,
+//   );
+//   timeline1.add(
+//     {
+//       targets: ['#boxFront'],
+//       translateZ: [
+//         {
+//           value: cubeWidth * 0.5 + cubeWidth * 0.1,
+//           duration: 2000,
+//         },
+//       ],
+//     },
+//     0,
+//   );
+//   timeline1.add(
+//     {
+//       targets: ['#boxTop'],
+//       translateY: [{ value: '-=10', duration: 2000 }],
+//       rotateX: [{ value: 90, duration: 0 }],
+//     },
+//     0,
+//   );
+//   timeline1.add(
+//     {
+//       targets: ['#boxTop', '#boxFront', '#boxLeft'],
+//       boxShadow: [
+//         { value: '0px 0px 0px 0px #a948ffb3', duration: 0 },
+//         { value: '0px 0px 60px -10px #a948ffb3', duration: 3000 },
+//       ],
+//     },
+//     0,
+//   );
 
-  const timeline3 = anime.timeline({
-    autoplay: false,
-  });
-  timeline3.add(
-    {
-      targets: ['#boxLeft'],
-      translateX: [{ value: '-=20', duration: 2000 }],
-      opacity: [{ value: 0, duration: 2000 }],
-      rotateY: [{ value: 90, duration: 0 }],
-    },
-    0,
-  );
-  timeline3.add(
-    {
-      targets: ['#boxRight'],
-      translateX: [{ value: '+=20', duration: 2000 }],
-      opacity: [{ value: 0, duration: 2000 }],
-      rotateY: [{ value: 90, duration: 0 }],
-    },
-    0,
-  );
-  timeline3.add(
-    {
-      targets: ['#boxBack'],
-      translateZ: [
-        {
-          value: -(cubeWidth * 0.5 + cubeWidth * 0.2),
-          duration: 2000,
-        },
-      ],
-      opacity: [{ value: 0, duration: 2000 }],
-    },
-    0,
-  );
-  timeline3.add(
-    {
-      targets: ['#boxFront'],
-      translateZ: [
-        {
-          value: cubeWidth * 0.5 + cubeWidth * 0.2,
-          duration: 2000,
-        },
-      ],
-      opacity: [{ value: 0, duration: 2000 }],
-    },
-    0,
-  );
-  timeline3.add(
-    {
-      targets: ['#boxTop'],
-      translateY: [{ value: '-=20', duration: 2000 }],
-      opacity: [{ value: 0, duration: 2000 }],
-      rotateX: [{ value: 90, duration: 0 }],
-    },
-    0,
-  );
-  timeline3.add(
-    {
-      targets: ['#boxBottom'],
-      translateY: [{ value: '+=20', duration: 2000 }],
-      opacity: [{ value: 0, duration: 2000 }],
-      rotateX: [{ value: 90, duration: 0 }],
-    },
-    0,
-  );
+//   const timeline3 = anime.timeline({
+//     autoplay: false,
+//   });
+//   timeline3.add(
+//     {
+//       targets: ['#boxLeft'],
+//       translateX: [{ value: '-=20', duration: 2000 }],
+//       opacity: [{ value: 0, duration: 2000 }],
+//       rotateY: [{ value: 90, duration: 0 }],
+//     },
+//     0,
+//   );
+//   timeline3.add(
+//     {
+//       targets: ['#boxRight'],
+//       translateX: [{ value: '+=20', duration: 2000 }],
+//       opacity: [{ value: 0, duration: 2000 }],
+//       rotateY: [{ value: 90, duration: 0 }],
+//     },
+//     0,
+//   );
+//   timeline3.add(
+//     {
+//       targets: ['#boxBack'],
+//       translateZ: [
+//         {
+//           value: -(cubeWidth * 0.5 + cubeWidth * 0.2),
+//           duration: 2000,
+//         },
+//       ],
+//       opacity: [{ value: 0, duration: 2000 }],
+//     },
+//     0,
+//   );
+//   timeline3.add(
+//     {
+//       targets: ['#boxFront'],
+//       translateZ: [
+//         {
+//           value: cubeWidth * 0.5 + cubeWidth * 0.2,
+//           duration: 2000,
+//         },
+//       ],
+//       opacity: [{ value: 0, duration: 2000 }],
+//     },
+//     0,
+//   );
+//   timeline3.add(
+//     {
+//       targets: ['#boxTop'],
+//       translateY: [{ value: '-=20', duration: 2000 }],
+//       opacity: [{ value: 0, duration: 2000 }],
+//       rotateX: [{ value: 90, duration: 0 }],
+//     },
+//     0,
+//   );
+//   timeline3.add(
+//     {
+//       targets: ['#boxBottom'],
+//       translateY: [{ value: '+=20', duration: 2000 }],
+//       opacity: [{ value: 0, duration: 2000 }],
+//       rotateX: [{ value: 90, duration: 0 }],
+//     },
+//     0,
+//   );
 
-  return { timeline1, timeline3 };
-}
+//   return { timeline1, timeline3 };
+// }
 
 function SquareCore({ className }: { className?: string }) {
   const { ref: squareBoxRef, width: cubeWidth } = useElementSize();

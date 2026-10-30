@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { MosaicBackgroundProvider } from '@/MosaicBackground/providers/MosaicBackgroundProvider';
 import { GlobalScroll } from '@/Providers/GlobalScrollProvider';
-import { MosaicBackgroundProvider } from '@/Providers/MosaicBackgroundProvider';
 import Navbar from '@/components/Navbar';
 import { TooltipProvider } from '@/core/Tooltip';
 
